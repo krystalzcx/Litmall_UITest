@@ -17,6 +17,6 @@ class TestLitemall:
                .create_good()
                .get_operate_result()
         )
-        print(res)
+        assert  '创建成功' == res
 
 

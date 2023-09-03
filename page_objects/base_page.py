@@ -1,4 +1,9 @@
+import allure
 from selenium import webdriver
+import time
+
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 # 父类
@@ -46,3 +51,20 @@ class BasePage:
     def do_quit(self):
         self.driver.quit()
 
+
+    def get_screen(self):
+        timestamp = int(time.time())
+        # 注意：一定提前创建好image路径
+        image_path = f'./image/image_{timestamp}.PNG'
+        # 截图
+        self.driver.save_screenshot(image_path)
+        # 将截图放到报告的数据中
+        allure.attach.file(image_path,name='picture',
+                           attachment_type=allure.attachment_type.PNG)
+
+
+    # 等待元素出现
+    def wait_element_until_visible(self,locator:tuple):
+        # visibility_of_element_located 等待元素出现
+        return  (WebDriverWait(self.driver,10)\
+                 .until(expected_conditions.visibility_of_element_located(locator)))
