@@ -10,6 +10,7 @@ class GoodsListPage(BasePage):
 
     __BIT_ADD = (By.XPATH,"//*[text()='添加']")
     __MSG_ADD_OPERATE = (By.XPATH, "//p[contains(text(),'创建成功')]")
+    __MSG_DELETE_OPERATE = (By.XPATH, "//p[contains(text(),'删除')]")
 
 
 
@@ -32,3 +33,22 @@ class GoodsListPage(BasePage):
         # 返回消息文本
         return msg
 
+
+    # 删除商品
+    def delete_goods(self, good_name):
+        # 对指定商品删除
+        # 注意这里没法对定位提取成类变量，因为删掉的商品名不固定
+        self.do_find(By.XPATH,f"//*[text()='{good_name}']/../..//*[text()='删除']").click()
+        # 跳转到当前页
+        return  GoodsListPage(self.driver)
+
+
+    """类目列表页面：获取操作结果"""
+    def get_delete_result(self):
+        # 获取冒泡消息文本
+        element = self.wait_element_until_visible(self.__MSG_DELETE_OPERATE)
+        # 消息文本
+        msg = element.text
+        logging.info(f'冒泡消息是:{msg}')
+        # 返回消息文本
+        return msg

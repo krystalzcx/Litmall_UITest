@@ -13,12 +13,12 @@ class GoodCreatePage(BasePage):
     __INPUT_GOOD_NAME = (By.XPATH,"//*[@class='el-form']/div[2]//input")
     __BIT_CONFIRM = (By.XPATH,"//span[text()='上架']")
 
-    def create_good(self):
+    def create_good(self,good_name):
         # 输入商品编号
         self.driver.find_element(By.XPATH,"//*[@class='el-form']/div[1]//input").send_keys('000000001')
         self.do_send_keys('000000001',self.__INPUT_GOOD_CODE)
         # 输入商品名称
-        self.do_send_keys('新增商品测试',self.__INPUT_GOOD_NAME)
+        self.do_send_keys(good_name,self.__INPUT_GOOD_NAME)
         # 智能等待按钮点击状态
         # 点击上架
         # click_exception处用了元组解包 *，这是因为原本是需要两个参数的，上方变量__BIT_CONFIRM是一个元组
